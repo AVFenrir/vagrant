@@ -10,6 +10,20 @@ Vagrant.configure("2") do |config|
                 vb.memory= "1024"
                 vb.name="Host-#{i}"
             end
+
+            if i == 1
+                node.vm.provision "shell", inline: <<-SHELL
+                    sudo sed -i 's/://archive.ubuntu.com' /etc/apt/sources.list
+                    sudo sed -i 's/://security.ubuntu.com' /etc/apt/sources.list
+                
+                    sudo apt-get update
+                    sudo apt-get install -y ansible
+                SHELL
+            end 
+
+
+
+
         end    
     end
 end
